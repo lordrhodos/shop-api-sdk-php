@@ -1,0 +1,8 @@
+<?php
+
+return [
+    'json-schema-file' => __DIR__ . '/resources/specification/openapi.json',
+    'root-class' => 'Model',
+    'namespace' => 'Starweb\Sdk',
+    'directory' => __DIR__ . '/src/Sdk',
+];
