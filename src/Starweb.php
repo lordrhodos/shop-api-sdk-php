@@ -6,13 +6,14 @@ use Http\Client\Common\Plugin\BaseUriPlugin;
 use Http\Client\Common\Plugin\HeaderDefaultsPlugin;
 use Http\Client\HttpClient;
 use Http\Discovery\MessageFactoryDiscovery;
+use Http\Discovery\Psr17FactoryDiscovery;
 use Http\Discovery\UriFactoryDiscovery;
 use Http\Message\MessageFactory;
+use Jane\OpenApiRuntime\Client\Psr7HttplugClient;
 use Starweb\Api\Authentication\TokenFilesystemCache;
 use Starweb\Api\Authentication\TokenManager;
 use Starweb\Api\Resource\Resources;
 use Starweb\HttpClient\Builder;
-use Http\Discovery\HttpClientDiscovery;
 use Starweb\Api\Authentication\ClientCredentials;
 use Starweb\Api\Authentication\TokenCacheInterface;
 use Starweb\Api\Resource\ResourceInterface;
@@ -48,7 +49,7 @@ class Starweb
      * @param string $baseUri
      * @param TokenManager $tokenManager
      */
-    public function __construct(DecoratedHttpClient $decoratedHttpClient, string $baseUri, TokenManager $tokenManager)
+    public function __construct(Psr7HttplugClient $decoratedHttpClient, string $baseUri, TokenManager $tokenManager)
     {
         $this->client = $decoratedHttpClient;
         $this->baseUri = $baseUri;
@@ -97,11 +98,11 @@ class Starweb
         TokenCacheInterface $tokenCache = null
     ): self {
         if (!$httpClient) {
-            $httpClient = HttpClientDiscovery::find();
+            $httpClient = new Starweb\Api\Client\Client();
         }
 
         if (!$messageFactory) {
-            $messageFactory = MessageFactoryDiscovery::find();
+            $messageFactory = Psr17FactoryDiscovery::findRequestFactory();
         }
 
         if (!$tokenCache) {
