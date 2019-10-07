@@ -16,3 +16,4 @@ jobs:
 
       - name: Run PHPUnit
         run: ~/.composer/vendor/bin/phpunit $GITHUB_WORKSPACE --coverage-text
+
