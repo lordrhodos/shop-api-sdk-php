@@ -4,18 +4,6 @@ namespace Starweb\Api\Generated\Endpoint;
 
 class PutProductCategory extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Psr7Endpoint
 {
-    protected $categoryId;
-    /**
-     * Update a product category. Retrieves the updated `ProductCategory` object
-     *
-     * @param int $categoryId The product category id
-     * @param \Starweb\Api\Generated\Model\ProductCategoryModelUpdatable $requestBody 
-     */
-    public function __construct(int $categoryId, \Starweb\Api\Generated\Model\ProductCategoryModelUpdatable $requestBody)
-    {
-        $this->categoryId = $categoryId;
-        $this->body = $requestBody;
-    }
     use \Jane\OpenApiRuntime\Client\Psr7EndpointTrait;
     public function getMethod() : string
     {
@@ -23,18 +11,11 @@ class PutProductCategory extends \Jane\OpenApiRuntime\Client\BaseEndpoint implem
     }
     public function getUri() : string
     {
-        return str_replace(array('{categoryId}'), array($this->categoryId), '/product-categories/{categoryId}');
+        return '/product-categories/{categoryId}';
     }
     public function getBody(\Symfony\Component\Serializer\SerializerInterface $serializer, $streamFactory = null) : array
     {
-        if ($this->body instanceof \Starweb\Api\Generated\Model\ProductCategoryModelUpdatable) {
-            return array(array('Content-Type' => array('application/json')), $serializer->serialize($this->body, 'json'));
-        }
         return array(array(), null);
-    }
-    public function getExtraHeaders() : array
-    {
-        return array('Accept' => array('application/json'));
     }
     /**
      * {@inheritdoc}
@@ -42,18 +23,18 @@ class PutProductCategory extends \Jane\OpenApiRuntime\Client\BaseEndpoint implem
      * @throws \Starweb\Api\Generated\Exception\PutProductCategoryBadRequestException
      * @throws \Starweb\Api\Generated\Exception\PutProductCategoryNotFoundException
      *
-     * @return null|\Starweb\Api\Generated\Model\ProductCategoryModelItem
+     * @return null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType)
     {
-        if (200 === $status && mb_strpos($contentType, 'application/json') !== false) {
-            return $serializer->deserialize($body, 'Starweb\\Api\\Generated\\Model\\ProductCategoryModelItem', 'json');
+        if (200 === $status) {
+            return null;
         }
-        if (400 === $status && mb_strpos($contentType, 'application/json') !== false) {
-            throw new \Starweb\Api\Generated\Exception\PutProductCategoryBadRequestException($serializer->deserialize($body, 'Starweb\\Api\\Generated\\Model\\ErrorModel', 'json'));
+        if (400 === $status) {
+            throw new \Starweb\Api\Generated\Exception\PutProductCategoryBadRequestException();
         }
-        if (404 === $status && mb_strpos($contentType, 'application/json') !== false) {
-            throw new \Starweb\Api\Generated\Exception\PutProductCategoryNotFoundException($serializer->deserialize($body, 'Starweb\\Api\\Generated\\Model\\ErrorModel', 'json'));
+        if (404 === $status) {
+            throw new \Starweb\Api\Generated\Exception\PutProductCategoryNotFoundException();
         }
     }
 }

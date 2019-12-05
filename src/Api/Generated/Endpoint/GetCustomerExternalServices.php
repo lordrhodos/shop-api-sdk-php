@@ -4,16 +4,6 @@ namespace Starweb\Api\Generated\Endpoint;
 
 class GetCustomerExternalServices extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Psr7Endpoint
 {
-    protected $customerId;
-    /**
-     * Returns a list of external services for a customer
-     *
-     * @param int $customerId The customers id
-     */
-    public function __construct(int $customerId)
-    {
-        $this->customerId = $customerId;
-    }
     use \Jane\OpenApiRuntime\Client\Psr7EndpointTrait;
     public function getMethod() : string
     {
@@ -21,26 +11,22 @@ class GetCustomerExternalServices extends \Jane\OpenApiRuntime\Client\BaseEndpoi
     }
     public function getUri() : string
     {
-        return str_replace(array('{customerId}'), array($this->customerId), '/customers/{customerId}/external-services');
+        return '/customers/{customerId}/external-services';
     }
     public function getBody(\Symfony\Component\Serializer\SerializerInterface $serializer, $streamFactory = null) : array
     {
         return array(array(), null);
     }
-    public function getExtraHeaders() : array
-    {
-        return array('Accept' => array('application/json'));
-    }
     /**
      * {@inheritdoc}
      *
      *
-     * @return null|\Starweb\Api\Generated\Model\CustomerExternalServicesModelCollection
+     * @return null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType)
     {
-        if (200 === $status && mb_strpos($contentType, 'application/json') !== false) {
-            return $serializer->deserialize($body, 'Starweb\\Api\\Generated\\Model\\CustomerExternalServicesModelCollection', 'json');
+        if (200 === $status) {
+            return null;
         }
     }
 }

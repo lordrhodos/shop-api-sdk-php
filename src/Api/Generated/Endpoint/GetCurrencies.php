@@ -17,20 +17,16 @@ class GetCurrencies extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements 
     {
         return array(array(), null);
     }
-    public function getExtraHeaders() : array
-    {
-        return array('Accept' => array('application/json'));
-    }
     /**
      * {@inheritdoc}
      *
      *
-     * @return null|\Starweb\Api\Generated\Model\CurrencyCollection
+     * @return null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType)
     {
-        if (200 === $status && mb_strpos($contentType, 'application/json') !== false) {
-            return $serializer->deserialize($body, 'Starweb\\Api\\Generated\\Model\\CurrencyCollection', 'json');
+        if (200 === $status) {
+            return null;
         }
     }
 }

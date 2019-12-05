@@ -4,18 +4,6 @@ namespace Starweb\Api\Generated\Endpoint;
 
 class PatchProductManufacturer extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Psr7Endpoint
 {
-    protected $manufacturerId;
-    /**
-     * Updates the `ProductManufacturer` object.
-     *
-     * @param int $manufacturerId The manufacturers id
-     * @param \Starweb\Api\Generated\Model\ProductManufacturerModel $requestBody 
-     */
-    public function __construct(int $manufacturerId, \Starweb\Api\Generated\Model\ProductManufacturerModel $requestBody)
-    {
-        $this->manufacturerId = $manufacturerId;
-        $this->body = $requestBody;
-    }
     use \Jane\OpenApiRuntime\Client\Psr7EndpointTrait;
     public function getMethod() : string
     {
@@ -23,33 +11,26 @@ class PatchProductManufacturer extends \Jane\OpenApiRuntime\Client\BaseEndpoint 
     }
     public function getUri() : string
     {
-        return str_replace(array('{manufacturerId}'), array($this->manufacturerId), '/product-manufacturers/{manufacturerId}');
+        return '/product-manufacturers/{manufacturerId}';
     }
     public function getBody(\Symfony\Component\Serializer\SerializerInterface $serializer, $streamFactory = null) : array
     {
-        if ($this->body instanceof \Starweb\Api\Generated\Model\ProductManufacturerModel) {
-            return array(array('Content-Type' => array('application/json')), $serializer->serialize($this->body, 'json'));
-        }
         return array(array(), null);
-    }
-    public function getExtraHeaders() : array
-    {
-        return array('Accept' => array('application/json'));
     }
     /**
      * {@inheritdoc}
      *
      * @throws \Starweb\Api\Generated\Exception\PatchProductManufacturerNotFoundException
      *
-     * @return null|\Starweb\Api\Generated\Model\ProductManufacturerModelItem
+     * @return null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType)
     {
-        if (200 === $status && mb_strpos($contentType, 'application/json') !== false) {
-            return $serializer->deserialize($body, 'Starweb\\Api\\Generated\\Model\\ProductManufacturerModelItem', 'json');
+        if (200 === $status) {
+            return null;
         }
-        if (404 === $status && mb_strpos($contentType, 'application/json') !== false) {
-            throw new \Starweb\Api\Generated\Exception\PatchProductManufacturerNotFoundException($serializer->deserialize($body, 'Starweb\\Api\\Generated\\Model\\ErrorModel', 'json'));
+        if (404 === $status) {
+            throw new \Starweb\Api\Generated\Exception\PatchProductManufacturerNotFoundException();
         }
     }
 }

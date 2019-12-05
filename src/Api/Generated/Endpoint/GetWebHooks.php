@@ -4,18 +4,6 @@ namespace Starweb\Api\Generated\Endpoint;
 
 class GetWebHooks extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \Jane\OpenApiRuntime\Client\Psr7Endpoint
 {
-    /**
-     * 
-     *
-     * @param array $queryParameters {
-     *     @var string $sortBy Sort the result using a specified field. webHookId is default. Valid options are: webHookId
-     *     @var string $sortOrder ASC for an ascending sort order; or DESC for a descending sort order. ASC is default
-     * }
-     */
-    public function __construct(array $queryParameters = array())
-    {
-        $this->queryParameters = $queryParameters;
-    }
     use \Jane\OpenApiRuntime\Client\Psr7EndpointTrait;
     public function getMethod() : string
     {
@@ -29,30 +17,16 @@ class GetWebHooks extends \Jane\OpenApiRuntime\Client\BaseEndpoint implements \J
     {
         return array(array(), null);
     }
-    public function getExtraHeaders() : array
-    {
-        return array('Accept' => array('application/json'));
-    }
-    protected function getQueryOptionsResolver() : \Symfony\Component\OptionsResolver\OptionsResolver
-    {
-        $optionsResolver = parent::getQueryOptionsResolver();
-        $optionsResolver->setDefined(array('sortBy', 'sortOrder'));
-        $optionsResolver->setRequired(array());
-        $optionsResolver->setDefaults(array());
-        $optionsResolver->setAllowedTypes('sortBy', array('string'));
-        $optionsResolver->setAllowedTypes('sortOrder', array('string'));
-        return $optionsResolver;
-    }
     /**
      * {@inheritdoc}
      *
      *
-     * @return null|\Starweb\Api\Generated\Model\WebHookModelCollection
+     * @return null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType)
     {
-        if (200 === $status && mb_strpos($contentType, 'application/json') !== false) {
-            return $serializer->deserialize($body, 'Starweb\\Api\\Generated\\Model\\WebHookModelCollection', 'json');
+        if (200 === $status) {
+            return null;
         }
     }
 }

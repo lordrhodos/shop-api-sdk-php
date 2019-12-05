@@ -17,24 +17,20 @@ class ListProductsVariantsAttributes extends \Jane\OpenApiRuntime\Client\BaseEnd
     {
         return array(array(), null);
     }
-    public function getExtraHeaders() : array
-    {
-        return array('Accept' => array('application/json'));
-    }
     /**
      * {@inheritdoc}
      *
      * @throws \Starweb\Api\Generated\Exception\ListProductsVariantsAttributesBadRequestException
      *
-     * @return null|\Starweb\Api\Generated\Model\ProductVariantAttributeModelCollection
+     * @return null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType)
     {
-        if (200 === $status && mb_strpos($contentType, 'application/json') !== false) {
-            return $serializer->deserialize($body, 'Starweb\\Api\\Generated\\Model\\ProductVariantAttributeModelCollection', 'json');
+        if (200 === $status) {
+            return null;
         }
-        if (400 === $status && mb_strpos($contentType, 'application/json') !== false) {
-            throw new \Starweb\Api\Generated\Exception\ListProductsVariantsAttributesBadRequestException($serializer->deserialize($body, 'Starweb\\Api\\Generated\\Model\\ErrorModel', 'json'));
+        if (400 === $status) {
+            throw new \Starweb\Api\Generated\Exception\ListProductsVariantsAttributesBadRequestException();
         }
     }
 }
